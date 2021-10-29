@@ -6,6 +6,7 @@ public class PlayerMovement : MonoBehaviour
 {
     Rigidbody2D rb;
     bool canJump = true;
+    int facingDirection = 1;
     [SerializeField] float jumpSpeed;
     [SerializeField] float movementSpeed;
 
@@ -34,10 +35,14 @@ public class PlayerMovement : MonoBehaviour
         if(Input.GetKey(KeyCode.D))
         {
             rb.velocity = new Vector2(movementSpeed * Time.fixedDeltaTime, rb.velocity.y);
+            transform.localRotation = Quaternion.Euler(0, 0, 0);
+            facingDirection = 1;
         }
         else if(Input.GetKey(KeyCode.A))
         {
             rb.velocity = new Vector2(-movementSpeed * Time.fixedDeltaTime, rb.velocity.y);
+            transform.localRotation = Quaternion.Euler(0, 180, 0);
+            facingDirection = -1;
         }
         else
         {
@@ -74,7 +79,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 if(hit.collider != null)
                 {
-                    if (hit.collider.tag != "PlayerCollider")
+                    if (hit.collider.tag == "ChaoP1" || hit.collider.tag == "ChaoP2" )
                     {
                         return true;
                     }
